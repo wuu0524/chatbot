@@ -10,21 +10,20 @@ app = Flask(__name__)
 llm = ChatOpenAI(
     temperature=0,
     model_name="gpt-3.5-turbo",
-openai_api_key = os.getenv("OPENAI_API_KEY")
+    openai_api_key=os.getenv("OPENAI_API_KEY")
 )
 
-# 對話記憶機制：記住過去對話
+# 對話記憶機制
 memory = ConversationBufferMemory(return_messages=True)
 conversation = ConversationChain(llm=llm, memory=memory, verbose=False)
 
-# Dialogflow 的 webhook endpoint
+# Dialogflow webhook endpoint
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json()
     user_input = req['queryResult']['queryText']
 
     try:
-        # 用 GPT 回應，並帶入記憶
         reply = conversation.predict(input=user_input)
         print("🧠 GPT 回應：", reply)
         return jsonify({"fulfillmentText": reply})
