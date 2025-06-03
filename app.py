@@ -11,6 +11,7 @@ llm = ChatOpenAI(
     temperature=0,
     model_name="gpt-3.5-turbo",
 openai_api_key = os.getenv("OPENAI_API_KEY")
+)
 
 # 對話記憶機制：記住過去對話
 memory = ConversationBufferMemory(return_messages=True)
