@@ -3,6 +3,7 @@ import os
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
+import traceback
 
 app = Flask(__name__)
 
@@ -29,7 +30,8 @@ def webhook():
         return jsonify({"fulfillmentText": reply})
     except Exception as e:
         print("❌ 錯誤：", str(e))
-        return jsonify({"fulfillmentText": "系統發生錯誤，請稍後再試。"})
+        traceback.print_exc()  # ← 印出完整錯誤堆疊
+        return jsonify({"fulfillmentText": f"系統錯誤：{str(e)}"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
