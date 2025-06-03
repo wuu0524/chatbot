@@ -10,7 +10,7 @@ app = Flask(__name__)
 llm = ChatOpenAI(
     temperature=0,
     model_name="gpt-3.5-turbo",
-    openai_api_key=os.getenv("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")
+    openai_api_key=os.getenv("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")
 )
 
 # 對話記憶機制：記住過去對話
